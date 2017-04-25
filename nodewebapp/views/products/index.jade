@@ -5,18 +5,18 @@ block content
          #{title}
 
     p
-         a(href='blobs/new') Add New Product
+         a(href='products/new') Add New Product
     ul
-        - each blob, i in blobs
+        - each product, i in products
             li
-                = blob.name
-                = blob.description
-                = blob._id
-                form(action='/blobs/#{blob._id}/edit',method='post',enctype='application/x-www-form-urlencoded')
+                = product.name
+                = product.description
+                = product._id
+                form(action='/products/#{product._id}/edit',method='post',enctype='application/x-www-form-urlencoded')
                     input(type='hidden',value='DELETE',name='_method')
                     button(type='submit').
                         Delete
                 p
-                    a(href='/blobs/#{blob._id}/edit') Edit
+                    a(href='/products/#{product._id}/edit') Edit
                 p
-                    a(href='/blobs/#{blob._id}') Show
+                    a(href='/products/#{product._id}') Show

@@ -16,28 +16,27 @@ router.use(methodOverride(function(req, res){
       }
 }));
 
-//build the REST operations at the base for blobs
-//this will be accessible from http://127.0.0.1:3000/blobs if the default route for / is left unchanged
+//build the REST operations at the base for products
+//this will be accessible from http://127.0.0.1:3000/products if the default route for / is left unchanged
 router.route('/')
-    //GET all blobs
+    //GET all products
     .get(function(req, res, next) {
-        //retrieve all blobs from Monogo
-        mongoose.model('Product').find({}, function (err, blobs) {
+        //retrieve all products from Monogo
+        mongoose.model('Product').find({}, function (err, products) {
             if (err) {
                 return console.error(err);
             } else {
                 //respond to both HTML and JSON. JSON responses require 'Accept: application/json;' in the Request Header
                 res.format({
-                    //HTML response will render the index.jade file in the views/blobs folder. We are also setting "blobs" to be an accessible variable in our jade view
                     html: function(){
                         res.render('products/index', {
                             title: 'All Products',
-                            "blobs" : blobs
+                            "products" : products
                         });
                     },
-                    //JSON response will show all blobs in JSON format
+                    //JSON response will show all products in JSON format
                     json: function(){
-                        res.json(blobs);
+                        res.json(products);
                     }
                 });
             }
@@ -45,42 +44,36 @@ router.route('/')
     })
     //POST a new blob
     .post(function(req, res) {
-        console.log(req);
+        console.log(req.body);
         // Get values from POST request. These can be done through forms or REST calls. These rely on the "name" attributes for forms
-        /*var name = req.body.name;
-        var badge = req.body.badge;
-        var dob = req.body.dob;
-        var company = req.body.company;
-        var isloved = req.body.isloved;
+        var name = req.body.name;
+        var description = req.body.description;
         //call the create function for our database
-        mongoose.model('Blob').create({
+        mongoose.model('Product').create({
             name : name,
-            badge : badge,
-            dob : dob,
-            isloved : isloved
-        }, function (err, blob) {
+            description : description
+        }, function (err, product) {
             if (err) {
                 res.send("There was a problem adding the information to the database.");
             } else {
                 //Blob has been created
-                console.log('POST creating new blob: ' + blob);
+                console.log('POST creating new blob: ' + product);
                 res.format({
                     //HTML response will set the location and redirect back to the home page. You could also create a 'success' page if that's your thing
                     html: function(){
                         // If it worked, set the header so the address bar doesn't still say /adduser
-                        res.location("blobs");
+                        res.location("products");
                         // And forward to success page
-                        res.redirect("/blobs");
+                        res.redirect("/products");
                     },
                     //JSON response will show the newly created blob
                     json: function(){
-                        res.json(blob);
+                        res.json(product);
                     }
                 });
             }
-        })*/
+        })
     });
-
 
 /* GET New Product page. */
 router.get('/new', function(req, res) {
