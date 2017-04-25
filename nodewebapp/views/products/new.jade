@@ -1,2 +1,12 @@
 extends ../layout
-fdsafa
+
+block content
+	h1.
+		#{title}
+	form#formAddProduct(name="addproduct",method="post",action="/products")
+		p Name:
+			input#inputName(type="text", placeholder="", name="name")
+		p Description:
+			textarea#inputDescription(type="text", placeholder="", name="description")
+		p
+			button#btnSubmit(type="submit") submit
