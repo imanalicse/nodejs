@@ -132,4 +132,94 @@ router.route('/:id')
         });
     });
 
+router.route('/:id/edit')
+    //GET the individual blob by Mongo ID
+    .get(function(req, res) {
+        //search for the blob within Mongo
+        mongoose.model('Product').findById(req.id, function (err, product) {
+            if (err) {
+                console.log('GET Error: There was a problem retrieving: ' + err);
+            } else {
+                //Return the blob
+                console.log('GET Retrieving ID: ' + product._id);
+                res.format({
+                    //HTML response will render the 'edit.jade' template
+                    html: function(){
+                        res.render('products/edit', {
+                            title: 'Product ' + product._id,
+                            "product" : product
+                        });
+                    },
+                    //JSON response will return the JSON output
+                    json: function(){
+                        res.json(product);
+                    }
+                });
+            }
+        });
+    })
+    //PUT to update a blob by ID
+    .put(function(req, res) {
+        // Get our REST or form values. These rely on the "name" attributes
+        var name = req.body.name;
+        var description = req.body.description;
+
+        //find the document by ID
+        mongoose.model('Product').findById(req.id, function (err, product) {
+            //update it
+            product.update({
+                name : name,
+                description : description,
+            }, function (err, productID) {
+                if (err) {
+                    res.send("There was a problem updating the information to the database: " + err);
+                }
+                else {
+                    //HTML responds by going back to the page or you can be fancy and create a new view that shows a success page.
+                    res.format({
+                        html: function(){
+                            res.redirect("/products/" + product._id);
+                        },
+                        //JSON responds showing the updated values
+                        json: function(){
+                            res.json(product);
+                        }
+                    });
+                }
+            })
+        });
+    })
+    //DELETE a Blob by ID
+    .delete(function (req, res){
+        //find blob by ID
+        mongoose.model('Product').findById(req.id, function (err, product) {
+            if (err) {
+                return console.error(err);
+            } else {
+                //remove it from Mongo
+                product.remove(function (err, product) {
+                    if (err) {
+                        return console.error(err);
+                    } else {
+                        //Returning success messages saying it was deleted
+                        console.log('DELETE removing ID: ' + product._id);
+                        res.format({
+                            //HTML returns us back to the main page, or you can create a success page
+                            html: function(){
+                                res.redirect("/products");
+                            },
+                            //JSON returns the item with the message that is has been deleted
+                            json: function(){
+                                res.json({message : 'deleted',
+                                    item : product
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    });
+
+
 module.exports = router;
