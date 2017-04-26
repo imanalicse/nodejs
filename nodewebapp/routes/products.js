@@ -42,7 +42,7 @@ router.route('/')
             }
         });
     })
-    //POST a new blob
+    //POST a new product
     .post(function(req, res) {
         console.log(req.body);
         // Get values from POST request. These can be done through forms or REST calls. These rely on the "name" attributes for forms
@@ -56,8 +56,8 @@ router.route('/')
             if (err) {
                 res.send("There was a problem adding the information to the database.");
             } else {
-                //Blob has been created
-                console.log('POST creating new blob: ' + product);
+                //Product has been created
+                console.log('POST creating new Product: ' + product);
                 res.format({
                     //HTML response will set the location and redirect back to the home page. You could also create a 'success' page if that's your thing
                     html: function(){
@@ -66,7 +66,7 @@ router.route('/')
                         // And forward to success page
                         res.redirect("/products");
                     },
-                    //JSON response will show the newly created blob
+                    //JSON response will show the newly created product
                     json: function(){
                         res.json(product);
                     }
@@ -102,7 +102,7 @@ router.param('id', function(req, res, next, id) {
             //if it is found we continue on
         } else {
             //uncomment this next line if you want to see every JSON document response for every GET/PUT/DELETE call
-            //console.log(blob);
+            //console.log(product);
             // once validation is done save the new item in the req
             req.id = id;
             // go to the next thing
@@ -133,14 +133,14 @@ router.route('/:id')
     });
 
 router.route('/:id/edit')
-    //GET the individual blob by Mongo ID
+    //GET the individual product by Mongo ID
     .get(function(req, res) {
-        //search for the blob within Mongo
+        //search for the product within Mongo
         mongoose.model('Product').findById(req.id, function (err, product) {
             if (err) {
                 console.log('GET Error: There was a problem retrieving: ' + err);
             } else {
-                //Return the blob
+                //Return the product
                 console.log('GET Retrieving ID: ' + product._id);
                 res.format({
                     //HTML response will render the 'edit.jade' template
@@ -158,7 +158,7 @@ router.route('/:id/edit')
             }
         });
     })
-    //PUT to update a blob by ID
+    //PUT to update a product by ID
     .put(function(req, res) {
         // Get our REST or form values. These rely on the "name" attributes
         var name = req.body.name;
@@ -189,9 +189,9 @@ router.route('/:id/edit')
             })
         });
     })
-    //DELETE a Blob by ID
+    //DELETE a Product by ID
     .delete(function (req, res){
-        //find blob by ID
+        //find product by ID
         mongoose.model('Product').findById(req.id, function (err, product) {
             if (err) {
                 return console.error(err);
