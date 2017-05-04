@@ -1,0 +1,24 @@
+extends ../layout
+
+block content
+    h1.
+         #{title}
+
+    p
+         a(href='products/new') Add New Product
+    p
+         img(src= "/images/logo.png")
+    ul
+        - each product, i in products
+            li
+                = product.name
+                = product.description
+                = product._id
+                form(action='/products/#{product._id}/edit',method='post',enctype='application/x-www-form-urlencoded')
+                    input(type='hidden',value='DELETE',name='_method')
+                    button(type='submit').
+                        Delete
+                p
+                    a(href='/products/#{product._id}/edit') Edit
+                p
+                    a(href='/products/#{product._id}') Show
