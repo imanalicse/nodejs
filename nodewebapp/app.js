@@ -12,12 +12,7 @@ app.use('/posts', posts);
 
 
 // blog post
-app.get('/post/:id', function(req, res){
-  // find the post in the `posts` array
-  /*const post = posts.filter((post) => {
-    return post.id == req.params.id
-  })[0]*/
-
+app.get('/posts/:id', function(req, res){
   // render the `post.ejs` template with the post content
     res.render('posts/post', {
         author: 'a',
