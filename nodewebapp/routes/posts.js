@@ -44,6 +44,7 @@ router.route('/')
 
 
 // route middleware to validate :id
+/*
 router.param('id', function(req, res, next, id) {
       req.id = id;
       next();
@@ -59,8 +60,18 @@ router.route('/:id').get(function(req, res){
     title: 'b',
     body: 'ddddd'
   });
-
 });
+
+*/
+
+router.route('/:id').get(function(req, res){
+ // render the `post.ejs` template with the post content
+ res.render('posts/post', {
+ author: 'a',
+ title: 'b',
+ body: 'ddddd'
+ });
+ });
 
  // render the `post.ejs` template with the post content
  /* res.render('posts/post', {

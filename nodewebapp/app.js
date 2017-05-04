@@ -11,7 +11,7 @@ app.use('/', routes);
 app.use('/posts', posts);
 
 
-// blog post
+/*// blog post
 app.get('/posts/:id', function(req, res){
   // render the `post.ejs` template with the post content
     res.render('posts/post', {
@@ -19,7 +19,7 @@ app.get('/posts/:id', function(req, res){
         title: 'b',
         body: 'ddddd'
     });
-});
+});*/
 
 app.listen(3000)
 
