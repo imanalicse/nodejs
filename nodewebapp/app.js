@@ -1,60 +1,58 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+// require and instantiate express
+const app = require('express')()
 
-var db = require('./model/db');
-var blob = require('./model/blobs');
-var product = require('./model/products');
+// fake posts to simulate a database
+const posts = [
+  {
+    id: 1,
+    author: 'John',
+    title: 'Templating with EJS',
+    body: 'Blog post number 1'
+  },
+  {
+    id: 2,
+    author: 'Drake',
+    title: 'Express: Starting from the Bottom',
+    body: 'Blog post number 2'
+  },
+  {
+    id: 3,
+    author: 'Emma',
+    title: 'Streams',
+    body: 'Blog post number 3'
+  },
+  {
+    id: 4,
+    author: 'Cody',
+    title: 'Events',
+    body: 'Blog post number 4'
+  }
+]
 
-var routes = require('./routes/index');
-var blobs = require('./routes/blobs');
-var products = require('./routes/products');
+// set the view engine to ejs
+app.set('view engine', 'ejs')
 
-
-//var users = require('./routes/users');
-
-var app = express();
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-//app.set('view engine', 'jade');
-
-// This part added for HTML file as view
-//app.engine('ejs', require('ejs').renderFile);
-app.set('view engine', 'ejs');
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', routes);
-app.use('/blobs', blobs);
-app.use('/products', products);
-//app.use('/users', users);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+// blog home page
+app.get('/', (req, res) => {
+  // render `home.ejs` with the list of posts
+  res.render('home', { posts: posts })
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+// blog post
+app.get('/post/:id', (req, res) => {
+  // find the post in the `posts` array
+  const post = posts.filter((post) => {
+    return post.id == req.params.id
+  })[0]
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  // render the `post.ejs` template with the post content
+  res.render('post', {
+    author: post.author,
+    title: post.title,
+    body: post.body
+  })
 });
 
-module.exports = app;
+app.listen(3000)
+
+console.log('listening on port 8080')
