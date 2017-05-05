@@ -32,53 +32,25 @@ var posts = [
   }
 ]
 
-//console.log(posts);
+console.log(posts[0]);
 
 // blog home page
 router.route('/')
-    //GET all products
     .get(function(req, res) {
-  // render `home.ejs` with the list of posts
   res.render('posts/index', { posts: posts })
 });
 
-
-// route middleware to validate :id
-/*
-router.param('id', function(req, res, next, id) {
-      req.id = id;
-      next();
-});
-
-// blog post
 router.route('/:id').get(function(req, res){
- // find the post in the `posts` array
-  console.log(req);
+    //console.log(req.params.id);
 
-  res.render('posts/post', {
-    author: 'a',
-    title: 'b',
-    body: 'ddddd'
-  });
-});
+    var post = posts[0];
 
-*/
+    res.render('posts/post', {
+        author: post.author,
+        title: post.title,
+        body: post.body
+    })
 
-router.route('/:id').get(function(req, res){
- // render the `post.ejs` template with the post content
- res.render('posts/post', {
- author: 'a',
- title: 'b',
- body: 'ddddd'
  });
- });
-
- // render the `post.ejs` template with the post content
- /* res.render('posts/post', {
-   author: post.author,
-   title: post.title,
-   body: post.body
-   });*/
-
 
 module.exports = router;
