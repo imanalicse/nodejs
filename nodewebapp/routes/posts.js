@@ -42,9 +42,7 @@ router.route('/')
 
 router.route('/:id').get(function(req, res){
     //console.log(req.params.id);
-
     var post = posts[0];
-
     res.render('posts/post', {
         author: post.author,
         title: post.title,
