@@ -10,7 +10,7 @@ var posts = [
     id: 1,
     author: 'John',
     title: 'Templating with EJS',
-    body: 'Blog post number 1'
+    body: 'Blog post number 1',
   },
   {
     id: 2,
