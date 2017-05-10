@@ -11,24 +11,21 @@ var posts = [
     author: 'John',
     title: 'Templating with EJS',
     body: 'Blog post number 1',
+    image:'/images/posts/camera.jpg'
   },
   {
     id: 2,
     author: 'Drake',
     title: 'Express: Starting from the Bottom',
-    body: 'Blog post number 2'
+    body: 'Blog post number 2',
+      image:'/images/posts/city.jpg'
   },
   {
     id: 3,
     author: 'Emma',
     title: 'Streams',
-    body: 'Blog post number 3'
-  },
-  {
-    id: 4,
-    author: 'Cody',
-    title: 'Events',
-    body: 'Blog post number 4'
+    body: 'Blog post number 3',
+    image:'/images/posts/digital.jpg'
   }
 ]
 
